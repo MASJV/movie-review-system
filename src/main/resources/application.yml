@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: movie-review-system
+
+server:
+  port: 8081
