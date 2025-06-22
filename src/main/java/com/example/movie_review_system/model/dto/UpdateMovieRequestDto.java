@@ -8,8 +8,10 @@ import lombok.Data;
 
 public class UpdateMovieRequestDto {
     private final String name;
-    //private final String trailorLink; ????
-    //private final String posterLink; ????
+    private final String trailerLink;
+    private final String posterLink;
+    private final String genre;
+    private final String language;
 }
 
 /**

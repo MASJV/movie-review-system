@@ -1,13 +1,15 @@
 package com.example.movie_review_system.model.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data //-> @getter, @Setter, @RequiredArgConstructor, @ToString, @EqualHashCode
-@Builder // goal of builder is to build immutable objects
+//@Data //-> @getter, @Setter, @RequiredArgConstructor, @ToString, @EqualHashCode
+//@Builder // goal of builder is to build immutable objects
+@Getter
+@Setter
+@ToString
 public class User { // user ek data model hai
     private static int users = 0;
     private final Integer userId;

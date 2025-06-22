@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 @Builder // not needed here
 @AllArgsConstructor
-
-
 public class CreateMovieRequestDto {
     private final String name;
-    private final String trailorLink;
+    private final String trailerLink;
     private final String posterLink;
+    private final String language;
+    private final String genre;
 }
 
 /**
