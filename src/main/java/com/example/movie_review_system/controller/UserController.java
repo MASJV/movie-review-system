@@ -55,18 +55,18 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<User> deleteAUser(@PathVariable("userId") int userId) {
-//        log.info("received a request to delete a user with id {}", userId);
-//        try {
-//            final User user = userService.deleteAUser(userId);
-//            return ResponseEntity.ok(user);
-//        } catch (UserNotFoundException ex) {
-//            return ResponseEntity.status(404).build();
-//        } catch (Exception ex) {
-//            return ResponseEntity.status(500).build();
-//        }
-//    }
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteAUser(@PathVariable("userId") int userId) {
+        log.info("received a request to delete a user with id {}", userId);
+        try {
+            final User user = userService.deleteAUser(userId);
+            return ResponseEntity.ok(user);
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.status(404).build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 
     @PatchMapping("/{userId}")
     public ResponseEntity<String> updateAUser(@PathVariable("userId") int userId,

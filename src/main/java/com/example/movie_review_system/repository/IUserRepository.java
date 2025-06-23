@@ -10,5 +10,5 @@ public interface IUserRepository {
     List<User> getAllUsers();
     void createAUser(User user);
     User updateAUser(int userId, String name) throws UserNotFoundException;
-    //User deleteAUser(int userId) throws UserNotFoundException;
+    User deleteAUser(int userId) throws UserNotFoundException;
 }

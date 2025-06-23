@@ -40,12 +40,12 @@ public class UserRepository implements IUserRepository {
         return user;
     }
 
-//    @Override
-//    public User deleteAUser(int userId) throws UserNotFoundException {
-//        for (User user : userList) {
-//            if (user.getUserId() == userId) userList.remove(user);
-//            return user;
-//        }
-//        throw new UserNotFoundException("User Not Found");
-//    }
+    @Override
+    public User deleteAUser(int userId) throws UserNotFoundException {
+        for (User user : userList) {
+            if (user.getUserId() == userId) userList.remove(user);
+            return user;
+        }
+        throw new UserNotFoundException("User Not Found");
+    }
 }

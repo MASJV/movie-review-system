@@ -37,7 +37,7 @@ public class UserService {
         return userRepository.updateAUser(userId, updateUserRequestDto.getName());
     }
 
-//    public User deleteAUser(int userId) throws UserNotFoundException {
-//        return userRepository.deleteAUser(userId);
-//    }
+    public User deleteAUser(int userId) throws UserNotFoundException {
+        return userRepository.deleteAUser(userId);
+    }
 }
