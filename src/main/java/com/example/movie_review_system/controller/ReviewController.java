@@ -34,7 +34,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Review> deleteAReview(@PathVariable("reviewId") int reviewId) {
+    public ResponseEntity<Review> deleteAReview(@PathVariable("reviewId") int reviewId) {// not deleting
         log.info("received a request to delete a review with id {}", reviewId);
         try {
             final Review review = reviewService.getAReview(reviewId);

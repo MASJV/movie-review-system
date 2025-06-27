@@ -1,5 +1,6 @@
 package com.example.movie_review_system.model.entity;
 
+import com.example.movie_review_system.service.MovieService;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,13 @@ public class User { // user ek data model hai
         this.watchList =  new ArrayList<>();
     }
 
+    public void addMovieToWatchList(Movie movie) {
+        this.watchList.add(movie);
+    }
+
+    public void deleteMovieFromWatchList(Movie movie) {
+        this.watchList.remove(movie);
+    }
 
     // watchList is reference. watchList memory address is fixed so final
     // movies inside watchList can be updated that's fine
