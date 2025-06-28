@@ -40,6 +40,7 @@ public class UserService {
     }
 
     public User updateAUser(int userId, final UpdateUserRequestDto updateUserRequestDto) throws UserNotFoundException {
+       // we can also calc user from userId and direcly pass user instead of userid right?????
         return userRepository.updateAUser(userId, updateUserRequestDto.getName());
         // yaha ye business logic to repository kar raha hai? repo ka code yaha pe bhi nahi kar sakte????
     }
@@ -53,7 +54,7 @@ public class UserService {
         User user = userRepository.getAUser(userId); // final why important(mandatory), without final also working????
         Movie movie = movieRepository.getAMovie(movieId);
         // user.addMovieToWatchList(movie); does this work?? ya service interacts with repository so not preferred
-        userRepository.addMovieToWatchList(userId, movie);
+        userRepository.addMovieToWatchList(user, movie);
         return user;
     }
 
@@ -61,7 +62,7 @@ public class UserService {
         int movieId = deleteMovieFromWatchListDto.getMovieId();
         final User user = getAUser(userId);
         final Movie movie = movieRepository.getAMovie(movieId);
-        userRepository.deleteMovieFromWatchList(userId, movie);
+        userRepository.deleteMovieFromWatchList(user, movie);
         return user;
 
 

@@ -41,13 +41,17 @@ public class ReviewRepository implements IReviewRepository{
         review.setTitle(title);
         review.setDescription(description);
         review.setRating(rating);
+
         return review;
     }
 
     @Override
-    public void deleteAReview(int reviewId) throws ReviewNotFoundException{
+    public Review deleteAReview(int reviewId) throws ReviewNotFoundException{
         for(Review review : reviewList){
-            if(review.getReviewId() == reviewId) reviewList.remove(review);
+            if(review.getReviewId() == reviewId) {
+                reviewList.remove(review);
+                return review; // reviewList se hi review hata hai not from the memory
+            }
         }
         throw new ReviewNotFoundException("Review Not Found");
     }

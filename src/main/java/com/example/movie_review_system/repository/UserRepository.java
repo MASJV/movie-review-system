@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public class UserRepository implements IUserRepository {
     public List<User> userList;
-    //public List<Movie> watchList;
 
     public UserRepository() {
         userList = new LinkedList<>();
@@ -53,15 +52,15 @@ public class UserRepository implements IUserRepository {
         throw new UserNotFoundException("User Not Found");
     }
 
-    @Override // interface ko override comoulsory in general right
-    public void addMovieToWatchList(int userId, Movie movie) throws UserNotFoundException{
-        final User user = getAUser(userId);
+    @Override // interface ko override compulsory in general right
+    public void addMovieToWatchList(User user, Movie movie){
+        //final User user = getAUser(userId);
         user.addMovieToWatchList(movie);
     }
 
     @Override
-    public void deleteMovieFromWatchList(int userId, Movie movie) throws UserNotFoundException {
-        final User user = getAUser(userId);
+    public void deleteMovieFromWatchList(User user, Movie movie) throws UserNotFoundException {
+        //final User user = getAUser(userId);
         user.deleteMovieFromWatchList(movie);
     }
 

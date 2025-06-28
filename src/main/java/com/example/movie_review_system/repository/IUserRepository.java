@@ -17,7 +17,7 @@ public interface IUserRepository {
 
     User deleteAUser(int userId) throws UserNotFoundException;
 
-    void addMovieToWatchList(int userId, Movie movie) throws UserNotFoundException;
+    void addMovieToWatchList(User user, Movie movie) throws UserNotFoundException;
 
-    void deleteMovieFromWatchList(int user, Movie movie) throws UserNotFoundException;
+    void deleteMovieFromWatchList(User user, Movie movie) throws UserNotFoundException;
 }

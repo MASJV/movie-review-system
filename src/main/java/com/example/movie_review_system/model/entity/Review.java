@@ -25,6 +25,17 @@ public class Review {
 //        this.downVote = downVote;
     }
 
+    public Review(int reviewId, Integer movieId, Integer userId, String title, String description, Double rating) {
+        this.reviewId = reviewId;
+        this.movieId = movieId;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+//        this.upVote = upVote;
+//        this.downVote = downVote;
+    }
+
     public static ReviewBuilder builder() {
         return new ReviewBuilder();
     }

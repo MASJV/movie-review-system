@@ -10,5 +10,6 @@ public interface IReviewRepository {
     List<Review> getAllReviews();
     Review createAReview(Review review);
     Review updateAReview(int reviewId, String title, String description, Double rating) throws ReviewNotFoundException;
-    void deleteAReview(int reviewId) throws ReviewNotFoundException;
+    Review deleteAReview(int reviewId) throws ReviewNotFoundException;
+    // why not void
 }
