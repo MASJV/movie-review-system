@@ -16,7 +16,7 @@ public class Movie {
     private String trailerLink;
     private String posterLink;
     private Double avgRating;
-    private Integer totalRating;
+    private Integer totalRating = 0;
     private final List<Review> reviews; // undar update ho sakta hai but address will remain same
     private String language;
     private String genre; // create an enum
@@ -30,18 +30,20 @@ public class Movie {
         this.genre = genre;
         this.reviews = new ArrayList<>();
         this.avgRating = 0.0;
-        //this.totalNumberOfRating = 0; can be get from size of reviews(list)
+        //this.totalNumberOfRating = 0; we can from size of reviews(list)
     }
 
     public void addReview(Review review){
         this.reviews.add(review);
         avgRating = (avgRating * (reviews.size() - 1) + review.getRating())/(double)reviews.size();
+        totalRating += 1;
     }
 
     public void deleteReview(Review review) {
         int size = reviews.size();
         this.reviews.remove(review);
         avgRating = ((avgRating * size) - review.getRating())/((size - 1));
+        totalRating -= 1;
     }
 
     public void updateReview(Review reviewDelete, Review reviewAdd) {

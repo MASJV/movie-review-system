@@ -24,12 +24,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers( // ye page, search etc hata de???
-            @RequestParam(name = "search", required = false) String nameSearch,
-            @RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
-            @RequestParam(name = "pageSize", defaultValue = "50") int pageSize) {
-        log.info("received a request to get all users to with params {} {} {}", nameSearch, pageNo, pageSize);
-
+    public ResponseEntity<List<User>> getAllUsers(){
+        log.info("received a request to get all users");
         final List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }

@@ -67,7 +67,7 @@ public class ReviewController {
 /*
 // there is a movie
  -> user1 created review 1, rating 7 -> 7
- -> user 2 created review 2, rating 9 -> (7*current size+9)/current size +1
+ -> user 2 created review 2, rating 9 -> (7*current size+9)/current size
  -> avg would be updatd
  -> moview review list would be update
 
