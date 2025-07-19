@@ -8,11 +8,9 @@ import lombok.Data;
 
 public class UpdateUserRequestDto {
     private final String name;
-    //private final Integer birthYear;
-    //private final String Country;
-    // no need to let user update birthYear and Country
 }
 
 /**
+ * "userId": 1,
  * "name": "JV"
  */

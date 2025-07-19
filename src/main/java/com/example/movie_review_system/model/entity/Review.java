@@ -11,8 +11,6 @@ public class Review {
     private String title;
     private String description;
     private Double rating;
-//    private Integer upVote;
-//    private Integer downVote;
 
     public Review(Integer movieId, Integer userId, String title, String description, Double rating) {
         this.reviewId = ++counter;

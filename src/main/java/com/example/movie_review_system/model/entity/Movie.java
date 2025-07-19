@@ -30,19 +30,17 @@ public class Movie {
         this.genre = genre;
         this.reviews = new ArrayList<>();
         this.avgRating = 0.0;
-        //this.totalNumberOfRating = 0; we can from size of reviews(list)
     }
 
     public void addReview(Review review){
         this.reviews.add(review);
-        avgRating = (avgRating * (reviews.size() - 1) + review.getRating())/(double)reviews.size();
+        avgRating = ((avgRating * totalRating) + review.getRating())/(totalRating + 1);
         totalRating += 1;
     }
 
     public void deleteReview(Review review) {
-        int size = reviews.size();
         this.reviews.remove(review);
-        avgRating = ((avgRating * size) - review.getRating())/((size - 1));
+        avgRating = ((avgRating * totalRating) - review.getRating())/(totalRating - 1);
         totalRating -= 1;
     }
 

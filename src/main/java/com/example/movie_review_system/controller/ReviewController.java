@@ -2,6 +2,7 @@ package com.example.movie_review_system.controller;
 
 import com.example.movie_review_system.exception.MovieNotFoundException;
 import com.example.movie_review_system.exception.ReviewNotFoundException;
+import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.dto.CreateReviewRequestDto;
 import com.example.movie_review_system.model.dto.DeleteReviewRequestDto;
 import com.example.movie_review_system.model.dto.UpdateMovieRequestDto;
@@ -28,10 +29,16 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<Review> createAReview(@RequestBody CreateReviewRequestDto createReviewRequestDto) throws MovieNotFoundException {
+    public ResponseEntity<Review> createAReview(@RequestBody CreateReviewRequestDto createReviewRequestDto){
         log.info("received a request to create a review with body {}", createReviewRequestDto);
-        final Review review = reviewService.createAReview(createReviewRequestDto);
-        return ResponseEntity.ok(review);
+        try {
+            final Review review = reviewService.createAReview(createReviewRequestDto);
+            return ResponseEntity.ok(review);
+        } catch(MovieNotFoundException | UserNotFoundException ex) {
+            return ResponseEntity.status(400).build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @DeleteMapping("/{reviewId}")

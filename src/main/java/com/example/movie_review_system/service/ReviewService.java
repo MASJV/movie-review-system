@@ -2,14 +2,17 @@ package com.example.movie_review_system.service;
 
 import com.example.movie_review_system.exception.MovieNotFoundException;
 import com.example.movie_review_system.exception.ReviewNotFoundException;
+import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.dto.CreateReviewRequestDto;
 import com.example.movie_review_system.model.dto.DeleteReviewRequestDto;
 import com.example.movie_review_system.model.dto.UpdateMovieRequestDto;
 import com.example.movie_review_system.model.dto.UpdateReviewRequestDto;
 import com.example.movie_review_system.model.entity.Movie;
 import com.example.movie_review_system.model.entity.Review;
+import com.example.movie_review_system.model.entity.User;
 import com.example.movie_review_system.repository.IMovieRepository;
 import com.example.movie_review_system.repository.IReviewRepository;
+import com.example.movie_review_system.repository.IUserRepository;
 import com.example.movie_review_system.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,7 @@ import java.util.List;
 public class ReviewService {
     private final IReviewRepository reviewRepository;  // servce imteracts with repository layer
     private final IMovieRepository movieRepository;
+    private final IUserRepository userRepository;
 
     public Review getAReview(int reviewId) throws ReviewNotFoundException {
         return reviewRepository.getAReview(reviewId);
@@ -32,8 +36,19 @@ public class ReviewService {
         return reviewRepository.getAllReviews();
     }
 
-    public Review createAReview(final CreateReviewRequestDto createReviewRequestDto) throws MovieNotFoundException {
-        // but if final then how we can update it
+    public Review createAReview(final CreateReviewRequestDto createReviewRequestDto) throws MovieNotFoundException, UserNotFoundException {
+        // but if final then how we can update it(reference is final right)
+        boolean found = false;
+        for(User user : userRepository.getAllUsers()) {
+            if(user.getUserId().equals(createReviewRequestDto.getUserId())) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            throw new UserNotFoundException("User does not exist");
+        }
+
         final Review review = new Review(createReviewRequestDto.getMovieId(), createReviewRequestDto.getUserId(),
                 createReviewRequestDto.getTitle(), createReviewRequestDto.getDescription(),
                 createReviewRequestDto.getRating());
