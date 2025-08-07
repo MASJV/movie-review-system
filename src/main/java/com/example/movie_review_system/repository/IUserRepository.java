@@ -1,5 +1,6 @@
 package com.example.movie_review_system.repository;
 
+import com.example.movie_review_system.exception.UserNotAbleToCreateException;
 import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.entity.Movie;
 import com.example.movie_review_system.model.entity.User;
@@ -11,7 +12,7 @@ public interface IUserRepository {
 
     List<User> getAllUsers();
 
-    void createAUser(User user);
+    boolean createAUser(User user);
 
     User updateAUser(int userId, String name) throws UserNotFoundException;
 

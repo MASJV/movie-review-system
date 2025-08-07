@@ -23,7 +23,8 @@ public class MovieController {
     private final MovieService movieService;
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
+    public ResponseEntity<List<Movie>> getAllMovies(@RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
+                                                    @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize) {
 
         log.info("received a request to get all movies");
         final List<Movie> movies = movieService.getAllMovies();

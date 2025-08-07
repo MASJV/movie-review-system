@@ -1,14 +1,20 @@
 package com.example.movie_review_system.controller;
 
 import com.example.movie_review_system.exception.MovieNotFoundException;
+import com.example.movie_review_system.exception.UserNotAbleToCreateException;
 import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.dto.*;
+import com.example.movie_review_system.model.dto.responseDto.CreateUserResponse;
+import com.example.movie_review_system.model.dto.responseDto.CreateUserResponseData;
 import com.example.movie_review_system.model.entity.Movie;
 import com.example.movie_review_system.model.entity.User;
+import com.example.movie_review_system.model.response.ResponseMetaData;
+import com.example.movie_review_system.model.response.ResponseWrapper;
 import com.example.movie_review_system.service.MovieService;
 import com.example.movie_review_system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,10 +50,42 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody CreateUserRequestDto createUserRequestDto) {
-        log.info("received a request to get a users with body {}", createUserRequestDto);
-        final User user = userService.createAUser(createUserRequestDto);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<ResponseWrapper<CreateUserResponseData>> createUser(@RequestBody CreateUserRequestDto createUserRequestDto) {
+        log.info("received a request to create a user with body {}", createUserRequestDto);
+        try {
+            final User user = userService.createAUser(createUserRequestDto);
+            final ResponseWrapper<CreateUserResponseData> response = CreateUserResponse.builder()
+                    .user(CreateUserResponseData.builder()
+                            .firstName(user.getName())
+                            .birthYear(user.getBirthYear())
+                            .country(user.getCountry())
+                            .build())
+                    .responseMetaData(ResponseMetaData.builder()
+                            .statusCode(200)
+                            .build())
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (UserNotAbleToCreateException ex) {
+            log.error("User not found: {}", ex.getMessage());
+            final ResponseWrapper<CreateUserResponseData> userNotFound = CreateUserResponse.builder()
+                    .responseMetaData(ResponseMetaData.builder()
+                            .statusCode(404)
+                            .errorMessage(ex.getMessage())
+                            .build())
+                    .build();
+            return ResponseEntity.status(404).body(userNotFound);
+        } catch (Exception ex) {
+            log.error("Error occurred while creating user", ex);
+            final ResponseWrapper<CreateUserResponseData> response = CreateUserResponse.builder()
+                    .responseMetaData(ResponseMetaData.builder()
+                            .statusCode(500) //5xx
+                            .errorMessage(ex.getMessage())
+                            .build())
+                    .build();
+            //return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+
     }
 
     @DeleteMapping("/{userId}")

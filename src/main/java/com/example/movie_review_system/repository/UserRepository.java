@@ -32,8 +32,14 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void createAUser(User user) {
-        userList.add(user);
+    public boolean createAUser(User user) {
+        try {
+            userList.add(user);
+            return true;
+        } catch (Exception ex) {
+            // Log the exception or handle it
+            return false;
+        }
     }
 
     @Override

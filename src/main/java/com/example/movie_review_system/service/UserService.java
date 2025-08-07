@@ -2,6 +2,7 @@ package com.example.movie_review_system.service;
 
 
 import com.example.movie_review_system.exception.MovieNotFoundException;
+import com.example.movie_review_system.exception.UserNotAbleToCreateException;
 import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.dto.AddMovieToWatchListDto;
 import com.example.movie_review_system.model.dto.CreateUserRequestDto;
@@ -13,6 +14,7 @@ import com.example.movie_review_system.repository.IMovieRepository;
 import com.example.movie_review_system.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +34,15 @@ public class UserService {
         return userRepository.getAllUsers();
     }
 
-    public User createAUser(final CreateUserRequestDto createUserRequestDto) {
+    public User createAUser(final CreateUserRequestDto createUserRequestDto) throws UserNotAbleToCreateException {
         final User user = new User(createUserRequestDto.getName(), createUserRequestDto.getBirthYear(),
                 createUserRequestDto.getCountry());
-        userRepository.createAUser(user);
+
+        boolean isCreated = userRepository.createAUser(user);
+        if (!isCreated) {
+            throw new UserNotAbleToCreateException("Error in creating user");
+        }
+
         return user;
     }
 
