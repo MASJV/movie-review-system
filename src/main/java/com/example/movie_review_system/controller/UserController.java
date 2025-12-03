@@ -4,13 +4,11 @@ import com.example.movie_review_system.exception.MovieNotFoundException;
 import com.example.movie_review_system.exception.UserNotAbleToCreateException;
 import com.example.movie_review_system.exception.UserNotFoundException;
 import com.example.movie_review_system.model.dto.*;
-import com.example.movie_review_system.model.dto.responseDto.CreateUserResponse;
-import com.example.movie_review_system.model.dto.responseDto.CreateUserResponseData;
-import com.example.movie_review_system.model.entity.Movie;
+import com.example.movie_review_system.model.dto.responseDto.UserResponse;
+import com.example.movie_review_system.model.dto.responseDto.UserResponseData;
 import com.example.movie_review_system.model.entity.User;
 import com.example.movie_review_system.model.response.ResponseMetaData;
 import com.example.movie_review_system.model.response.ResponseWrapper;
-import com.example.movie_review_system.service.MovieService;
 import com.example.movie_review_system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,12 +48,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseWrapper<CreateUserResponseData>> createUser(@RequestBody CreateUserRequestDto createUserRequestDto) {
+    public ResponseEntity<ResponseWrapper<UserResponseData>> createUser(@RequestBody CreateUserRequestDto createUserRequestDto) {
         log.info("received a request to create a user with body {}", createUserRequestDto);
         try {
             final User user = userService.createAUser(createUserRequestDto);
-            final ResponseWrapper<CreateUserResponseData> response = CreateUserResponse.builder()
-                    .user(CreateUserResponseData.builder()
+            final ResponseWrapper<UserResponseData> response = UserResponse.builder()
+                    .user(UserResponseData.builder()
                             .firstName(user.getName())
                             .birthYear(user.getBirthYear())
                             .country(user.getCountry())
@@ -67,7 +65,7 @@ public class UserController {
             return ResponseEntity.ok(response);
         } catch (UserNotAbleToCreateException ex) {
             log.error("User not found: {}", ex.getMessage());
-            final ResponseWrapper<CreateUserResponseData> userNotFound = CreateUserResponse.builder()
+            final ResponseWrapper<UserResponseData> userNotFound = UserResponse.builder()
                     .responseMetaData(ResponseMetaData.builder()
                             .statusCode(404)
                             .errorMessage(ex.getMessage())
@@ -76,7 +74,7 @@ public class UserController {
             return ResponseEntity.status(404).body(userNotFound);
         } catch (Exception ex) {
             log.error("Error occurred while creating user", ex);
-            final ResponseWrapper<CreateUserResponseData> response = CreateUserResponse.builder()
+            final ResponseWrapper<UserResponseData> response = UserResponse.builder()
                     .responseMetaData(ResponseMetaData.builder()
                             .statusCode(500) //5xx
                             .errorMessage(ex.getMessage())
