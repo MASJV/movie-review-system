@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder // not needed here
 @AllArgsConstructor
+
 public class CreateUserRequestDto {
     private final String name;
     private final Integer birthYear;

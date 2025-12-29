@@ -11,35 +11,57 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // annotation for service layer
+@Service
 @Slf4j
 @RequiredArgsConstructor
 public class MovieService {
 
-    private final IMovieRepository movieRepository; //loosely couple
+    private final IMovieRepository movieRepository;
+
+    public Movie createAMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
+
+    public Movie createAMovie(final CreateMovieRequestDto createMovieRequestDto) {
+        final Movie movie = new Movie(
+                createMovieRequestDto.getName(),
+                createMovieRequestDto.getTrailerLink(),
+                createMovieRequestDto.getPosterLink(),
+                createMovieRequestDto.getLanguage(),
+                createMovieRequestDto.getGenre()
+        );
+        return movieRepository.save(movie);
+    }
 
     public List<Movie> getAllMovies() {
         return movieRepository.getAllMovies();
     }
-    public Movie getAMovie(int movieId) throws MovieNotFoundException {
-        return movieRepository.getAMovie(movieId);
-    }
 
-    public Movie createAMovie(final CreateMovieRequestDto createMovieRequestDto){
-        final Movie movie = new Movie(createMovieRequestDto.getName(), createMovieRequestDto.getTrailerLink(),
-                        createMovieRequestDto.getPosterLink(), createMovieRequestDto.getLanguage(),
-                        createMovieRequestDto.getGenre());
-        movieRepository.createAMovie(movie);
+    public Movie getAMovie(int movieId) throws MovieNotFoundException {
+        Movie movie = movieRepository.getAMovie(movieId);
+        if(movie == null) {
+            throw new MovieNotFoundException("Movie not found with id: " + movieId);
+        }
         return movie;
     }
-    public Movie updateAMovie(int movieId, final UpdateMovieRequestDto updateMovieRequestDto) throws MovieNotFoundException{
-        return movieRepository.updateAMovie(movieId, updateMovieRequestDto.getName(),
-                updateMovieRequestDto.getTrailerLink(), updateMovieRequestDto.getPosterLink(),
-                updateMovieRequestDto.getLanguage(), updateMovieRequestDto.getGenre());
+
+    public Movie updateAMovie(int movieId, final UpdateMovieRequestDto updateMovieRequestDto)
+            throws MovieNotFoundException {
+
+        Movie movie = getAMovie(movieId); // will throw if not found
+
+        movie.setName(updateMovieRequestDto.getName());
+        movie.setTrailerLink(updateMovieRequestDto.getTrailerLink());
+        movie.setPosterLink(updateMovieRequestDto.getPosterLink());
+        movie.setLanguage(updateMovieRequestDto.getLanguage());
+        movie.setGenre(updateMovieRequestDto.getGenre());
+
+        return movieRepository.save(movie);
     }
 
-    public Movie deleteAMovie(int movieId) throws MovieNotFoundException{
-        return movieRepository.deleteAMovie(movieId);
+    public Movie deleteAMovie(int movieId) throws MovieNotFoundException {
+        Movie movie = getAMovie(movieId); // will throw if not found
+        movieRepository.delete(movie);
+        return movie;
     }
-
 }
