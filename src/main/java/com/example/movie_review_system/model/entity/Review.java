@@ -6,14 +6,15 @@ import lombok.Data;
 public class Review {
     private static int counter = 0;
     private final int reviewId;
-    private final Integer movieId;
+    private final Integer movieId; // this is foreign key on review table
     private final Integer userId;
     private String title;
     private String description;
     private Double rating;
 
     public Review(Integer movieId, Integer userId, String title, String description, Double rating) {
-        this.reviewId = ++counter;
+        this.reviewId = ++counter; // eska value databse purpose se nahi hai jab ham reviewId ko @Id annotation de denge tab
+        // hibernetes apna Id me value daal dega. this refeerences only to object not the database
         this.movieId = movieId;
         this.userId = userId;
         this.title = title;

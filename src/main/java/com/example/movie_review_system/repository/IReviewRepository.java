@@ -11,5 +11,4 @@ public interface IReviewRepository {
     Review createAReview(Review review);
     Review updateAReview(int reviewId, String title, String description, Double rating) throws ReviewNotFoundException;
     Review deleteAReview(int reviewId) throws ReviewNotFoundException;
-    // why not void
 }

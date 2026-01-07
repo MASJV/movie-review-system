@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreateUserResponseData {
+public class UserResponseData {
 
     private final String firstName;
     private final Integer birthYear;

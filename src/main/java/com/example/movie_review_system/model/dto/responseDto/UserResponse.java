@@ -4,10 +4,11 @@ import com.example.movie_review_system.model.response.ResponseMetaData;
 import com.example.movie_review_system.model.response.ResponseWrapper;
 import lombok.Builder;
 
-public class GetAUserResponse extends ResponseWrapper<GetAUserResponseData> {
+public class UserResponse extends ResponseWrapper<UserResponseData> {
 
     @Builder
-    public GetAUserResponse(GetAUserResponseData user, ResponseMetaData responseMetaData) {
-        super(user, responseMetaData);
+    public UserResponse(UserResponseData user, ResponseMetaData responseMetaData) {
+        super(user,responseMetaData);
     }
+
 }
